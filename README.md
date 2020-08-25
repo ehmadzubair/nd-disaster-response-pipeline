@@ -1,5 +1,8 @@
 # Disaster Response Pipeline Project
 
+### Installing requirements
+Run `pip install -r requirements.txt`
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 

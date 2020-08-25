@@ -47,24 +47,20 @@ def build_model():
     parameters = {
         'clf__estimator__n_estimators': [100, 200],
         # 'clf__estimator__criterion': ['gini', 'entropy'],
-    #     'clf__estimator__bootstrap': [True, False],
-    #     'tfidf__use_idf': [False, True]
+        # 'clf__estimator__bootstrap': [True, False],
+        'tfidf__use_idf': [False, True]
     }
     
-    return GridSearchCV(pipeline, param_grid=parameters, verbose=10, cv=2)
+    return GridSearchCV(pipeline, param_grid=parameters, verbose=10)
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
     y_pred = model.predict(X_test)
     pred_df = pd.DataFrame(y_pred, columns=Y_test.columns)
 
-    print(y_pred.dtype)
-    print(pred_df.dtypes)
     print("\nBest Parameters:", model.best_params_)
 
     for c in pred_df.columns:
-        print(Y_test[c].dtype)
-        print(pred_df[c].dtype)
         print(classification_report(Y_test[c], pred_df[c], category_names))
 
 
@@ -77,7 +73,7 @@ def main():
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
-        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.001, train_size=0.001)
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
         
         print('Building model...')
