@@ -128,6 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-classifier.pkl
+models/classifier.pkl
 .DS_Store
 .idea
