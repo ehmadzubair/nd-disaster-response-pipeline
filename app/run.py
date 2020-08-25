@@ -46,11 +46,23 @@ def index():
     genre_names = list(genre_counts.index)
 
     classification_df = df.drop(columns=['id', 'message', 'original', 'genre'])
-    print(np.sum(classification_df))
+    for c in classification_df.columns:
+        classification_df[c] = classification_df[c].astype(int)
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
+        {
+            'data': [
+                Pie(
+                    labels=classification_df.columns,
+                    values=np.sum(classification_df)
+                )
+            ],
+
+            'layout': {
+                'title': 'Percentage occurance of Assistance',
+            }
+        },
         {
             'data': [
                 Bar(
@@ -68,26 +80,7 @@ def index():
                     'title': "Genre"
                 }
             }
-        },
-        # {
-        #     'data': [
-        #         Pie(
-        #             x=genre_names,
-        #             y=genre_counts
-        #         )
-        #     ],
-        #
-        #     'layout': {
-        #         'title': 'Distribution of Message Genres',
-        #         'yaxis': {
-        #             'title': "Count"
-        #         },
-        #         'xaxis': {
-        #             'title': "Genre"
-        #         }
-        #     }
-        # }
-
+        }
     ]
     
     # encode plotly graphs in JSON
